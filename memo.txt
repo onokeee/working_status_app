@@ -1,5 +1,42 @@
-git@github.com: onokeee/working_status_app.git
+git@github.com:onokeee/working_status_app.git
 
 github_SSH公開鍵
 C:\Users\onoke\.ssh\id_ed25519.pub
 sshkey_ssh-ed25519 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK9PF3ZAWDMZh2McY/QvkJ5f9ATJLrW+KqlvU1gKI2tA
+
+
+#git hubとの連携のやり方
+
+【前準備①（リモートリポジトリという入れ物を作成する）】
+１．githubのWeb画面上でリポジトリを新規作成
+２．リポジトリの画面で、sshのURLを確認する
+
+【前準備②入れるモノ側の連携】
+３．VSCODEなどのコマンドプロンプトで、対象のプロジェクトファイルの一番上位のディレクトリで『git init』する⇒.gitファイルが作成されると成功
+４．『git add .』で全部のフォルダ,ファイルをステージングする
+５．『git commit -m "コメント"』で、ローカルリポジトリにステージングした内容のスナップショットを保存する
+６． ②で作成したリモートリポジトリという入れ物に簡単にデータを投入できるよう、リモートリポジトリに略称をつける。
+　『git remote add 別名 ②で確認したsshのURL』でこのリモートリポジトリと（例：git remote add origin https://github.com/username/repository.git　など）
+  originだと被るので、被らない名前をつけておくとよいかも。
+７．『git push -u 別名 ブランチ名』で、⑤でローカルリポジトリのコミットしたスナップショットを、リモートリポジトリにプッシュする。
+★共有完了
+
+
+
+【補足】
+git push -u origin master の -u オプション
+"upstream" の設定を行うためのものです。このオプションを使うことで、ローカルのブランチ（この場合、master）とリモートのブランチ（origin/master）の関係が設定されます。
+詳細説明：
+-u（または --set-upstream）: このオプションを使うことで、ローカルブランチ（例えば master）がリモートのブランチ（この場合 origin/master）と関連付けられます。
+これにより、今後は git push や git pull を実行する際に、origin master と明示的に指定する必要がなくなります。
+具体的には、このオプションを使った後、git push や git pull の際に、リモートブランチが自動的に選択されるようになります。
+例：
+最初に git push -u origin master を使うと、master（ローカルのブランチ）と origin/master（リモートのブランチ）が関連付けられます。
+git push -u origin master
+このコマンドを実行すると、次回からは git push とだけ入力しても、origin の master ブランチにプッシュされます。
+その後は、次のように簡単にプッシュできるようになります：
+git push
+同じように、git pull を使うと、origin/master から自動的に変更が取り込まれます。
+結論：
+-u オプションは、ローカルブランチとリモートブランチの関連付けを行い、
+今後の git push や git pull の際にリモートのブランチを自動的に使用できるようにするもの
