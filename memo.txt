@@ -1,0 +1,5 @@
+git@github.com: onokeee/working_status_app.git
+
+github_SSH公開鍵
+C:\Users\onoke\.ssh\id_ed25519.pub
+sshkey_ssh-ed25519 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK9PF3ZAWDMZh2McY/QvkJ5f9ATJLrW+KqlvU1gKI2tA
