@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>本日のガントチャート</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .chart-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>{{ session['username'] }}さんの本日の活動履歴</h2>
+    <div class="chart-container">
+        {{ chart|safe }}
+    </div>
+    <a href="{{ url_for('index') }}">← メイン画面に戻る</a>
+</body>
+
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ボタンカスタマイズ</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <h1>ボタンをカスタマイズ</h1>
+    <form method="POST">
+        <div id="buttons">
+            {% for button in buttons %}
+            <div class="button-container">
+                <input type="text" name="buttons" value="{{ button }}">
+                <button type="button" class="btn" onclick="removeField(this)">削除</button>
+            </div>
+            {% endfor %}
+        </div>
+        <button type="button" onclick="addField()">ボタンを追加</button><br><br>
+        <button type="submit">保存</button>
+        <a href="{{ url_for('index') }}">戻る</a>
+    </form>
+
+    <script>
+        function addField() {
+            const container = document.createElement('div');
+            container.className = 'button-container';
+
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.name = 'buttons';
+            input.placeholder = 'ボタン名';
+
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'btn';
+            button.textContent = '削除';
+            button.onclick = function () {
+                removeField(button);
+            };
+
+            container.appendChild(input);
+            container.appendChild(button);
+
+            document.getElementById('buttons').appendChild(container);
+        }
+
+        function removeField(btn) {
+            btn.parentElement.remove();
+        }
+    </script>
+</body>
+
+</html>

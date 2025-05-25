@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>状態管理</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+        let allowClose = false;
+
+        window.addEventListener('beforeunload', function (e) {
+            if (!allowClose) {
+                const message = '勤務終了ボタンを押していません。本当にこのページを離れますか？';
+                e.preventDefault();
+                e.returnValue = message;
+                return message;
+            }
+        });
+
+        function allowExit() {
+            allowClose = true;
+        }
+
+        function confirmEndWork() {
+            const confirmed = confirm("勤務を終了し、ログアウトします。よろしいですか？");
+            if (confirmed) {
+                allowExit();
+                document.getElementById('logoutForm').submit();
+            }
+        }
+
+        function beforeSubmit() {
+            allowExit();
+        }
+    </script>
+</head>
+
+<body>
+    <h1>状態管理</h1>
+    <p>ようこそ {{ username }} さん</p>
+    <p>最後の状態: <strong>{{ last_status }}</strong></p>
+
+    <!-- ✅ 状態ボタン（勤務終了のみ特別） -->
+    <form method="post" onsubmit="beforeSubmit()">
+        {% for button in buttons %}
+        {% if button == '勤務終了' %}
+        <button type="button" onclick="confirmEndWork()">勤務終了</button>
+        {% else %}
+        <button type="submit" name="status" value="{{ button }}">{{ button }}</button>
+        {% endif %}
+        {% endfor %}
+    </form>
+
+    <!-- ✅ 非表示のログアウトフォーム -->
+    <form id="logoutForm" method="get" action="{{ url_for('logout') }}"></form>
+
+    <p>
+        <a href="{{ url_for('customize') }}">ボタンをカスタマイズ</a> |
+        <a href="{{ url_for('download_csv') }}" onclick="allowExit()">CSVダウンロード</a> |
+        <a href="{{ url_for('current_status') }}">現在の状態一覧</a>
+    </p>
+
+    <hr>
+    <h2>{{ username }} さんの本日のガントチャート</h2>
+    <div>
+        {{ chart|safe }}
+    </div>
+
+</body>
+
+</html>

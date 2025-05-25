@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>現在の状態一覧</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta http-equiv="refresh" content="10">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px auto;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f0f0f0;
+        }
+
+        form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 style="text-align:center;">現在の状態一覧</h1>
+
+    <form method="get" action="{{ url_for('current_status') }}">
+        状態フィルター：
+        <select name="filter">
+            <option value="">全て</option>
+            {% for s in unique_statuses %}
+            <option value="{{ s }}" {% if current_filter==s %}selected{% endif %}>{{ s }}</option>
+            {% endfor %}
+        </select>
+        並び順：
+        <select name="sort">
+            <option value="desc" {% if sort_order=='desc' %}selected{% endif %}>新しい順</option>
+            <option value="asc" {% if sort_order=='asc' %}selected{% endif %}>古い順</option>
+        </select>
+        <button type="submit">表示</button>
+    </form>
+
+    <table>
+        <tr>
+            <th>ユーザー名</th>
+            <th>状態</th>
+            <th>開始時刻</th>
+            <th>経過時間</th>
+        </tr>
+        {% for username, status, start_time, elapsed in statuses %}
+        <tr>
+            <td>{{ username }}</td>
+            <td>{{ status }}</td>
+            <td>{{ start_time }}</td>
+            <td>{{ elapsed }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <p style="text-align:center;">
+        <a href="{{ url_for('index') }}">← 戻る</a>
+    </p>
+</body>
+
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ユーザー登録</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <h2>ユーザー登録</h2>
+    <form method="POST">
+        <input type="text" name="username" placeholder="ユーザー名" required><br>
+        <input type="password" name="password" placeholder="パスワード" required><br>
+        <input input type="email" name="email" placeholder="メールアドレス" required><br>
+        <input type="submit" value="登録">
+    </form>
+    <p><a href="{{ url_for('login') }}">ログイン画面へ戻る</a></p>
+</body>
+
+</html>
